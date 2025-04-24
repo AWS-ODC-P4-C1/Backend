@@ -2,15 +2,14 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'tondockerhub/odc_backend'
-        DOCKER_CREDENTIALS_ID = 'dockerhub-creds'
+        DOCKER_IMAGE = "mormbathie/odc_backend:${BUILD_NUMBER}" // <-- Docker image taggée par numéro de build
+        DOCKER_CREDENTIALS_ID = 'github-creds_odc'
     }
 
     stages {
         stage('Clone code') {
             steps {
-                    git credentialsId: 'github-creds_odc', url: 'https://github.com/AWS-ODC-P4-C1/Backend.git'
-
+                git branch: 'main', credentialsId: 'github-creds_odc', url: 'https://github.com/AWS-ODC-P4-C1/Backend.git'
             }
         }
 
@@ -48,14 +47,14 @@ pipeline {
 
     post {
         failure {
-            mail to: 'tonmail@example.com',
+            mail to: 'mormbathie98@gmail.com',
                  subject: "Échec du pipeline Jenkins",
                  body: "Le pipeline a échoué. Vérifie Jenkins pour plus de détails."
         }
         success {
-            mail to: 'tonmail@example.com',
-                 subject: "Pipeline Jenkins réussi 🎉",
-                 body: "Tout s'est bien passé. L'application est déployée !"
+            mail to: 'mormbathie98@gmail.com',
+                 subject: "Pipeline Jenkins réussi",
+                 body: "Tout s'est bien passé. L'application est déployée ! 🎉"
         }
     }
 }
