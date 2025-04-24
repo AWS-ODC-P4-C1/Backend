@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.10'
-            args '-u root' // Exécute en root pour installer dépendances si besoin
-        }
-    }
+    agent any // Utilise l'agent 'any' si Docker n'est pas une option
 
     environment {
         DOCKER_IMAGE = "mormbathie/odc_backend:${BUILD_NUMBER}" // Tag de l'image Docker
@@ -34,7 +29,7 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 script {
-                    docker.build("$DOCKER_IMAGE")
+                    sh "docker build -t $DOCKER_IMAGE ."
                 }
             }
         }
