@@ -9,7 +9,8 @@ pipeline {
     stages {
         stage('Clone code') {
             steps {
-                git 'https://github.com/TON_UTILISATEUR_GITHUB/TON_REPO.git'
+                    git credentialsId: 'github-creds_odc', url: 'https://github.com/AWS-ODC-P4-C1/Backend.git'
+
             }
         }
 
